@@ -29,7 +29,6 @@ import Jimp from 'jimp';
   app.get("/filteredimage/", async ( req : Request, res : Response) => {
 
     let { image_url } = req.query;
-    console.log(image_url);
 
     if (!image_url) {
       return res.status(400).
