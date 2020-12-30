@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf www/ || true",
     "build": "npm run clean && tsc && cp package.json www/package.json && mkdir www/tmp/ && cd www && zip -r Archive.zip . && cd ..",
@@ -11,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/grutt/udacity-c2-image-filter.git"
+    "url": "https://github.com/hmaurya/cloud-developer/tree/master/course-02/project/image-filter-starter-code"
   },
-  "author": "",
+  "author": "Himanshu Maurya",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/grutt/udacity-c2-image-filter/issues"
+    "url": "https://github.com/hmaurya/cloud-developer/tree/master/course-02/issues"
   },
-  "homepage": "https://github.com/grutt/udacity-c2-image-filter#readme",
+  "homepage": "https://github.com/hmaurya/cloud-developer/blob/master/course-02/project/image-filter-starter-code/README.md",
   "devDependencies": {
     "@types/bluebird": "^3.5.27",
     "@types/express": "^4.17.0",
