@@ -1,7 +1,8 @@
-import express from 'express';
+import express, { NextFunction } from 'express';
 import { Router, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
+import Jimp from 'jimp';
 
 (async () => {
 
@@ -14,11 +15,8 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   // Use the body parser middleware for post requests
   app.use(bodyParser.json());
 
-  // @TODO1 IMPLEMENT A RESTFUL ENDPOINT
   // GET /filteredimage?image_url={{URL}}
   // endpoint to filter an image from a public url.
-  // IT SHOULD
-  //    1
   //    1. validate the image_url query
   //    2. call filterImageFromURL(image_url) to filter the image
   //    3. send the resulting file in the response
@@ -26,10 +24,9 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   // QUERY PARAMATERS
   //    image_url: URL of a publicly accessible image
   // RETURNS
-  //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
+  //   the filtered image file
 
-  /**************************************************************************** */
-  app.get("/filteredimage/", async ( req : Request, res : Response ) => {
+  app.get("/filteredimage/", async ( req : Request, res : Response) => {
 
     let { image_url } = req.query;
     console.log(image_url);
@@ -37,15 +34,28 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
     if (!image_url) {
       return res.status(400).
       send("image url is required!");
+    } else {
+      Jimp.read(image_url.toString())
+      .catch(error => {
+        res.status(404).json({
+          status: "resource not found!",
+          error: error.message
+        })
+      });
     }
-    const local_path = await filterImageFromURL(image_url.toString());
-    console.log(local_path);
-    res.on('finish', () => {deleteLocalFiles([local_path])});
-    return res.sendFile(local_path);
+
+    const local_path = filterImageFromURL(image_url.toString());
+    local_path.then(image_file_path => {
+      res.on('finish', () => {deleteLocalFiles([image_file_path])});
+        return res.status(200).sendFile(image_file_path);
+    }).catch(error => {
+      res.status(500).json({
+            status: false,
+            error: error.message
+      })
+    });
   });
 
-  //! END @TODO1
-  
   // Root Endpoint
   // Displays a simple message to the user
   app.get( "/", async ( req, res ) => {
