@@ -1,3 +1,9 @@
+
+# My submission
+1. Eb url: http://udacity-imagefilter-hmaurya-dev.us-east-2.elasticbeanstalk.com/
+2. An exaample url with above service http://udacity-imagefilter-hmaurya-dev.us-east-2.elasticbeanstalk.com/filteredimage?image_url=https://upload.wikimedia.org/wikipedia/commons/b/bd/Golden_tabby_and_white_kitten_n01.jpg
+3. My dev branch is 'image_filter' and prod branch is 'master'
+
 # Udagram Image Filtering Microservice
 
 Udagram is a simple cloud application developed alongside the Udacity Cloud Engineering Nanodegree. It allows users to register and log into a web client, post photos to the feed, and process photos using an image filtering microservice.
